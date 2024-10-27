@@ -140,7 +140,7 @@ if st.button("Generate", type="primary"):
                         api_key=eleven_labs_api_key,
                         text=Section.text,
                         voice=voice_list[voice],
-                        model='eleven_multilingual_v1'
+                        model='eleven_multilingual_v2'
                         )
             
                 audio_file = BytesIO(audio)
