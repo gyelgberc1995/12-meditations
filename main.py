@@ -61,7 +61,8 @@ class Sections(BaseModel):
 # Define voice types
 voice_list = {
     "Charlotte": "XB0fDUnXU5powFXDhCwa",
-    "Thomas": "GBv7mTt0atIp3Br8iCZE"
+    "Thomas": "GBv7mTt0atIp3Br8iCZE",
+    "Frederick": "g298lY8JIucgBDyOpRLj"
 }
 
 # Open file systemprompt.txt
@@ -108,7 +109,7 @@ st.audio("sounds/"+background_sound_type + ".mp3", format="audio/mp3", start_tim
 
 voice= st.selectbox(
     'Select voice',
-     ('Charlotte', 'Thomas')
+     ('Charlotte', 'Thomas', 'Frederick')
 )
             
 if st.button("Generate", type="primary"):
