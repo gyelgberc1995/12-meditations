@@ -62,7 +62,7 @@ class Sections(BaseModel):
 voice_list = {
     "Charlotte": "XB0fDUnXU5powFXDhCwa",
     "Thomas": "GBv7mTt0atIp3Br8iCZE",
-    "Frederick": "g298lY8JIucgBDyOpRLj"
+    "Sahara": "qT3qfGZ0g0ss8WV5908L"
 }
 
 # Open file systemprompt.txt
@@ -109,7 +109,7 @@ st.audio("sounds/"+background_sound_type + ".mp3", format="audio/mp3", start_tim
 
 voice= st.selectbox(
     'Select voice',
-     ('Charlotte', 'Thomas', 'Frederick')
+     ('Charlotte', 'Thomas', 'Sahara')
 )
             
 if st.button("Generate", type="primary"):
@@ -140,7 +140,7 @@ if st.button("Generate", type="primary"):
                         api_key=eleven_labs_api_key,
                         text=Section.text,
                         voice=voice_list[voice],
-                        model='eleven_multilingual_v2' if voice == 'Frederick' else 'eleven_multilingual_v1' 
+                        model='eleven_multilingual_v2' if voice == 'Sahara' else 'eleven_multilingual_v1' 
                         )
             
                 audio_file = BytesIO(audio)
