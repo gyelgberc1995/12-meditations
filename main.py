@@ -101,14 +101,11 @@ language= st.selectbox(
      ('English', 'Spanish', 'French', 'Hindi', 'Italian', 'German', 'Polish', 'Portuguese')
 )
 
-# background_sound_type = st.selectbox(
-#             'Select background sounds',
-#             ('forest', 'rain')
-#         )
-# st.audio("sounds/"+background_sound_type + ".mp3", format="audio/mp3", start_time=0)
-
-uploaded_file = st.file_uploader("Upload an MP3 file", type="mp3")
-st.audio(uploaded_file, format="audio/mp3", start_time=0)
+background_sound_type = st.selectbox(
+            'Select background sounds',
+            ('forest', 'rain')
+        )
+st.audio("sounds/"+background_sound_type + ".mp3", format="audio/mp3", start_time=0)
 
 voice= st.selectbox(
     'Select voice',
