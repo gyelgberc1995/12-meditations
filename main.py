@@ -164,7 +164,7 @@ if st.button("Generate", type="primary"):
         audio_file = open("meditation.mp3", "rb")
         audio_bytes = audio_file.read()
 
-        st.audio(audio_bytes, format="audio/mp3", start_time=0)
+        st.audio(audio_bytes, format="audio/mp3", start_time=5)
         st.download_button(label="Download audio", data=audio_bytes, file_name="meditation.mp3", mime="audio/mp3")
 
         
