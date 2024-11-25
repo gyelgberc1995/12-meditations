@@ -101,12 +101,6 @@ language= st.selectbox(
      ('English', 'Spanish', 'French', 'Hindi', 'Italian', 'German', 'Polish', 'Portuguese')
 )
 
-# background_sound_type = st.selectbox(
-#             'Select background sounds',
-#             ('forest', 'rain')
-#         )
-# st.audio("sounds/"+background_sound_type + ".mp3", format="audio/mp3", start_time=0)
-
 uploaded_file = st.file_uploader("Upload an MP3 file", type="mp3")
 st.audio(uploaded_file, format="audio/mp3", start_time=0)
 
@@ -152,19 +146,25 @@ if st.button("Generate", type="primary"):
                 pause_timing = Section.pause * 1000
                 pause = AudioSegment.silent(duration=pause_timing)
                 voice_over += pause
+
+
+            # Add a 5-second silent prelude to the voice-over
+            prelude = AudioSegment.silent(duration=5000)  # 5 seconds
+            voice_over = prelude + voice_over
                 
-            # Create background sound path which consist of "sounds" folder + background_sound_type + ".mp3"
-            # background_sound_path = "sounds/" + background_sound_type + ".mp3"
-            # Create overlay
+            # Prepare background sound
             background = AudioSegment.from_file(uploaded_file, format="mp3")
-            meditation = voice_over.overlay(background, loop=True)
+            background = AudioSegment.silent(duration=5000) + background 
+
+            # Create overlay
+            meditation = background.overlay(voice_over, position=5000, loop=True)
             
         # Creating audio file
         meditation_file = meditation.export("meditation.mp3", format="mp3")
         audio_file = open("meditation.mp3", "rb")
         audio_bytes = audio_file.read()
 
-        st.audio(audio_bytes, format="audio/mp3", start_time=5000)
+        st.audio(audio_bytes, format="audio/mp3", start_time=0)
         st.download_button(label="Download audio", data=audio_bytes, file_name="meditation.mp3", mime="audio/mp3")
 
         
