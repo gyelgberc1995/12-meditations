@@ -153,8 +153,8 @@ if st.button("Generate", type="primary"):
                 pause = AudioSegment.silent(duration=pause_timing)
                 voice_over += pause
                 
-            # Create background sound path which consist of "sounds" folder + background_sound_type + ".mp3"
-            background_sound_path = "sounds/" + background_sound_type + ".mp3"
+            # Create background sound path which consist of "sounds" folder + uploaded_file + ".mp3"
+            background_sound_path = "sounds/" + uploaded_file + ".mp3"
             # Create overlay
             background = AudioSegment.from_file(background_sound_path, format="mp3")
             meditation = voice_over.overlay(background, loop=True)
