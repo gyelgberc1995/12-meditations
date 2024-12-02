@@ -148,14 +148,14 @@ if st.button("Generate", type="primary"):
                 voice_over += pause
 
             background = AudioSegment.from_file(uploaded_file, format="mp3")
-            meditation = voice_over.overlay(background, loop=True)
+            meditation = voice_over.overlay(background, loop=False)
 
         # Creating audio file
         meditation_file = meditation.export("meditation.mp3", format="mp3")
         audio_file = open("meditation.mp3", "rb")
         audio_bytes = audio_file.read()
 
-        st.audio(audio_bytes, format="audio/mp3", start_time=5000)
+        st.audio(audio_bytes, format="audio/mp3", start_time=0)
         st.download_button(label="Download audio", data=audio_bytes, file_name="meditation.mp3", mime="audio/mp3")
 
         
