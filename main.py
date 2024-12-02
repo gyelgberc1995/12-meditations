@@ -147,27 +147,13 @@ if st.button("Generate", type="primary"):
                 pause = AudioSegment.silent(duration=pause_timing)
                 voice_over += pause
 
-            # Handle optional background sound
-            if uploaded_file is not None:
-                background = AudioSegment.from_file(uploaded_file, format="mp3")
-                
-                # Add a 5-second silent delay before the voice-over
-                delayed_voice_over = AudioSegment.silent(duration=5000) + voice_over 
+        background = AudioSegment.from_file(uploaded_file, format="mp3")
 
-                # Overlay the voice-over onto the background
-                mixed_audio = background.overlay(delayed_voice_over)
+        delayed_voice_over = AudioSegment.silent(duration=5000) + voice_over 
 
-                # If the background is longer than the voice-over, append the remaining background
-                remaining_background_duration = len(background) - len(delayed_voice_over)
-                if remaining_background_duration > 0:
-                    remaining_background = background[-remaining_background_duration:]
-                    meditation = mixed_audio + remaining_background
-                else:
-                    meditation = mixed_audio
-            else:
-                st.warning("No background sound uploaded. Proceeding with voice-over only.")
-                meditation = voice_over
-            
+        # Create overlay
+        meditation = background.overlay(delayed_voice_over, loop=True)
+
         # Creating audio file
         meditation_file = meditation.export("meditation.mp3", format="mp3")
         audio_file = open("meditation.mp3", "rb")
