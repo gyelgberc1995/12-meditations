@@ -148,9 +148,7 @@ if st.button("Generate", type="primary"):
                 voice_over += pause
 
             background = AudioSegment.from_file(uploaded_file, format="mp3")
-            delayed_voice_over = AudioSegment.silent(duration=5000) + voice_over 
-            # Create overlay
-            meditation = background.overlay(delayed_voice_over, loop=True)
+            meditation = voice_over.overlay(background, loop=True)
 
         # Creating audio file
         meditation_file = meditation.export("meditation.mp3", format="mp3")
