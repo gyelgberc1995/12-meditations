@@ -150,35 +150,16 @@ if st.button("Generate", type="primary"):
             # Handle optional background sound
             if uploaded_file is not None:
                 background = AudioSegment.from_file(uploaded_file, format="mp3")
-                background_duration = len(background)  # in milliseconds
-                voice_duration = len(voice_over)
-
-                if voice_duration < background_duration:
-                    # Calculate additional silence needed to stretch voice-over
-                    additional_silence = background_duration - voice_duration
-                    num_sections = len(response.sections)
-                    silence_between_sections = additional_silence // max(num_sections, 1)
-
-                    # Insert silence proportionally between sections
-                    stretched_voice_over = AudioSegment.empty()
-                    for Section in response.sections:
-                        audio = generate(
-                            api_key=eleven_labs_api_key,
-                            text=Section.text,
-                            voice=voice_list[voice],
-                            model='eleven_multilingual_v2' if voice == 'Sahara' else 'eleven_multilingual_v1' 
-                        )
-                        audio_file = BytesIO(audio)
-                        audio_proc = AudioSegment.from_file(audio_file, format="mp3")
-                        stretched_voice_over += audio_proc
-                        stretched_voice_over += AudioSegment.silent(duration=silence_between_sections)
-
-                    voice_over = stretched_voice_over
-
+                
                 delayed_voice_over = AudioSegment.silent(duration=5000) + voice_over 
 
                 # Create overlay
-                meditation = background.overlay(delayed_voice_over, loop=False)
+                meditation = background.overlay(delayed_voice_over)
+
+                # Append the remaining background sound after the voice-over finishes
+                remaining_background = background[len(delayed_voice_over):]
+                meditation = meditation + remaining_background
+
             else:
                 st.warning("No background sound uploaded. Proceeding with voice-over only.")
                 meditation = voice_over
