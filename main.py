@@ -156,17 +156,13 @@ if st.button("Generate", type="primary"):
                 # Overlay the voice-over onto the background
                 mixed_audio = background.overlay(delayed_voice_over)
 
-                # If the background is longer than the voice-over, append the remaining background
-                remaining_background_duration = len(background) - len(delayed_voice_over)
-                if remaining_background_duration > 0:
-                    remaining_background = background[-remaining_background_duration:]
-                    meditation = mixed_audio + remaining_background
-                else:
-                    meditation = mixed_audio
+                total_duration = len(delayed_voice_over) + 60000  # 60,000ms = 1 minute
+                truncated_background = background[:total_duration]
+                meditation = truncated_background.overlay(delayed_voice_over)
             else:
                 st.warning("No background sound uploaded. Proceeding with voice-over only.")
                 meditation = voice_over
-                
+
         # Creating audio file
         meditation_file = meditation.export("meditation.mp3", format="mp3")
         audio_file = open("meditation.mp3", "rb")
